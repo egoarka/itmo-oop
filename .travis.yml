@@ -1,0 +1,4 @@
+language: java
+env:
+  - WORK_DIR=lab1/app
+script: cd $WORK_DIR && mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V && mvn test -B
