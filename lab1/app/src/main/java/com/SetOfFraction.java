@@ -11,8 +11,8 @@ public class SetOfFraction {
     set = new TreeSet<Fraction>();
   }
 
-  public boolean add(Fraction... fraction) {
-    return set.addAll(Arrays.asList(fraction));
+  public boolean add(Fraction... fractions) {
+    return set.addAll(Arrays.asList(fractions));
   }
 
   public Fraction getMax() {

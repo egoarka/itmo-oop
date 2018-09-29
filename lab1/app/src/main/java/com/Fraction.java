@@ -1,6 +1,6 @@
 package com;
 
-public class Fraction implements Comparable<Fraction> {
+public class Fraction implements Comparable<Fraction>, Cloneable {
   private double numenator;
   private double denominator;
 
@@ -29,6 +29,13 @@ public class Fraction implements Comparable<Fraction> {
     return (double) (numenator / denominator);
   }
 
+  public Fraction addition(Fraction fraction) throws CloneNotSupportedException {
+    if (fraction == null) {
+      return this.clone();
+    }
+    return new Fraction(getNumenator() + fraction.getNumenator(), getDenominator() + fraction.getDenominator());
+  }
+
   @Override
   public int compareTo(Fraction fraction) {
     int result;
@@ -46,5 +53,10 @@ public class Fraction implements Comparable<Fraction> {
   @Override
   public String toString() {
     return Double.toString(getValue());
+  }
+
+  @Override
+  protected Fraction clone() throws CloneNotSupportedException {
+    return (Fraction) super.clone();
   }
 }
