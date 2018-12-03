@@ -2,7 +2,13 @@ package com;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.function.IntConsumer;
+import java.util.function.IntUnaryOperator;
 import java.util.stream.IntStream;
+import java.util.stream.StreamSupport;
 
 public class Polynom {
   private ArrayList<Fraction> coefficients;
@@ -51,8 +57,6 @@ public class Polynom {
     int max = Math.max(coLeft.size(), coRight.size());
     int min = Math.min(coLeft.size(), coRight.size());
     ArrayList<Fraction> maxArr = max == coLeft.size() ? coLeft : coRight;
-
-    IntStream
 
     ArrayList<Fraction> result = new ArrayList<Fraction>();
     for (int i = 0; i < max; i++) {
