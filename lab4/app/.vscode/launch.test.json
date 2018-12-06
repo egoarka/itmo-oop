@@ -1,0 +1,30 @@
+{
+  "run": {
+    "default": "",
+    "items": [
+      {
+        "name": "app",
+        "projectName": "app",
+        "workingDirectory": "/home/egoarka/git/itmo-oop/lab4/app",
+        "args": [],
+        "vmargs": [],
+        "env": {},
+        "preLaunchTask": ""
+      }
+    ]
+  },
+  "debug": {
+    "default": "",
+    "items": [
+      {
+        "name": "app",
+        "projectName": "app",
+        "workingDirectory": "/home/egoarka/git/itmo-oop/lab4/app",
+        "args": [],
+        "vmargs": [],
+        "env": {},
+        "preLaunchTask": ""
+      }
+    ]
+  }
+}
