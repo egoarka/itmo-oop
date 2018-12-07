@@ -25,7 +25,7 @@ import org.junit.Test;
 /**
  * Unit test for simple App.
  */
-public class SimpleJdbcTest {
+public class DaoTest {
   private ShopDao shopDao = new ShopDaoImpl();
   private ProductDao productDao = new ProductDaoImpl();
 

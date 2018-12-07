@@ -67,4 +67,9 @@ public class ProductDaoImpl implements ProductDao {
     return Optional.ofNullable(product);
   }
 
+  @Override
+  public void close() throws Exception {
+
+  }
+
 }

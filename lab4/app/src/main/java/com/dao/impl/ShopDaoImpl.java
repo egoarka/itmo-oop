@@ -238,4 +238,9 @@ public class ShopDaoImpl implements ShopDao {
     }
     return Optional.ofNullable(newProduct);
   }
+
+  @Override
+  public void close() throws Exception {
+
+  }
 }
