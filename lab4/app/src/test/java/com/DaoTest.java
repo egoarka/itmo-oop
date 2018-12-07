@@ -17,6 +17,7 @@ import com.entity.Shop;
 import com.scripts.DBScripts;
 
 import org.hamcrest.CoreMatchers;
+import org.javatuples.Pair;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -36,7 +37,7 @@ public class DaoTest {
 
     DBScripts.dropTables();
     DBScripts.createTables();
-    DBScripts.fillDB();
+    DBScripts.fillDBDao();
 
     // run this if you already created tables
     // DBScripts.deleteTablesRows();
@@ -143,6 +144,28 @@ public class DaoTest {
     shopHavingCheapestProduct = shopDao.havingCheapestProduct(product)
         .flatMap(shopDao::findById);
     assertEquals("5ka", shopHavingCheapestProduct.get().getName());
+  }
+
+  @Test
+  public void testShopDao2() {
+    List<Product> products = Arrays.asList(new Product("milk"),
+        new Product("salt"));
+    List<Pair<Integer, Product>> pairs = shopDao
+        .shopsHavingAnyOfTheseProducts(products);
+
+    // shop_id product_name price quantity
+    // 1 milk 15 3
+    // 2 milk 35 7
+    // 2 salt 2 1
+
+    //@formatter:off
+    List<Pair<Integer, Product>> expectedPairs = Arrays.asList(
+      Pair.with(1, new Product("milk", 3, 15)),
+      Pair.with(2, new Product("milk", 7, 35)),
+      Pair.with(2, new Product("salt", 1, 2))
+    );
+    assertThat(pairs, CoreMatchers.is(expectedPairs));
+
   }
 
 }

@@ -8,6 +8,7 @@ public class Product {
 
   private String name;
   private Integer quantity;
+
   private Integer price;
 
   public Product(String name, Integer quantity, Integer price) {
@@ -16,12 +17,17 @@ public class Product {
     this.price = price;
   }
 
-  public Product() {
-
+  public Product(String name, Integer quantity) {
+    this.name = name;
+    this.quantity = quantity;
   }
 
   public Product(String name) {
     this.name = name;
+  }
+
+  public Product() {
+
   }
 
   public String getName() {

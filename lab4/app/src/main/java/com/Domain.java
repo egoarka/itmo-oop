@@ -7,6 +7,8 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.entity.Product;
+
 import org.javatuples.Pair;
 import org.javatuples.Quartet;
 
@@ -29,7 +31,30 @@ public class Domain {
     // ProductDaoImpl d = new ProductDaoImpl();
     // Optional<String> name = d.insert(new Product("vilk"));
     // name.ifPresent(System.out::println);
+    //@formatter:off
+    // Integer res = Optional
+    //   .of(Optional.of(1))
+    //   .flatMap(o -> o)
+    //   .get();
 
+    // System.out.println(res);
+    //@formatter:off
+
+
+    List<Pair<Integer, Product>> expectedPairs = Arrays.asList(
+      Pair.with(1, new Product("milk", 3, 15)),
+      Pair.with(2, new Product("milk", 7, 35)),
+      Pair.with(2, new Product("salt", 1, 2))
+    );
+
+    Map<Integer, List<Product>> byShopIdAAA = expectedPairs
+      .stream()
+      .collect(
+        Collectors.groupingBy(
+          pair -> pair.getValue0(),
+          Collectors.mapping(pair -> pair.getValue1(), Collectors.toList())
+        )
+      );
     if (true)
       return;
     // System.out.println(String.format("hellao%nworld", ""));

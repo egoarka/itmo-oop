@@ -1,10 +1,15 @@
 use shopdb;
 -- so few data for sake of simplicity
 
-INSERT INTO shops (name, address) 
-  VALUES ('5ka', 'SPB');
-INSERT INTO shops (name, address) 
-  VALUES ('lenta', 'SPB');
+SET IDENTITY_INSERT shops ON;
+INSERT INTO shops (id, name, address) 
+  VALUES (111, 'service-shop-1', 'SPB');
+INSERT INTO shops (id, name, address) 
+  VALUES (222, 'service-shop-2', 'SPB');
+INSERT INTO shops (id, name, address) 
+  VALUES (333, 'service-shop-3', 'SPB');
+SET IDENTITY_INSERT shops OFF;
+
 -- INSERT INTO shops (name, address) 
 --   VALUES ('Karusel', 'SPB');
 
@@ -17,14 +22,21 @@ INSERT INTO products (name)
 -- INSERT INTO products (name) 
 --   VALUES ('ice-cream');
 
-INSERT INTO shop_product (shop_id, product_name, quantity, price) 
-  VALUES (1, 'milk', 3, 15);
 
 INSERT INTO shop_product (shop_id, product_name, quantity, price) 
-  VALUES (2, 'milk', 7, 35);
+  VALUES (111, 'milk', 3, 15);
+INSERT INTO shop_product (shop_id, product_name, quantity, price) 
+  VALUES (111, 'salt', 10, 5);
 
 INSERT INTO shop_product (shop_id, product_name, quantity, price) 
-  VALUES (2, 'salt', 1, 2);
+  VALUES (222, 'milk', 7, 35);
+INSERT INTO shop_product (shop_id, product_name, quantity, price) 
+  VALUES (222, 'salt', 1, 2);
+
+INSERT INTO shop_product (shop_id, product_name, quantity, price) 
+  VALUES (333, 'milk', 3, 5);
+INSERT INTO shop_product (shop_id, product_name, quantity, price) 
+  VALUES (333, 'salt', 4, 2);
 
 -- UPDATE shop_product
 --   SET price = 15, quantity = 3

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import com.DataSource;
 import com.MyLogger;
@@ -17,12 +18,21 @@ import com.dao.ShopDao;
 import com.entity.Product;
 import com.entity.Shop;
 
+import org.javatuples.Pair;
+
 public class ShopDaoImpl implements ShopDao {
   //@formatter:off
   private static final String SQL_INSERT = "INSERT INTO shops (name, address) VALUES (?, ?)";
   private static final String SQL_FIND_BY_ID = "SELECT * FROM shops where id = ?";
   private static final String SQL_FETCH_SHOP_PRODUCT = "SELECT * FROM shop_product WHERE shop_id = ? AND product_name = ?";
   private static final String SQL_FETCH_SHOP_PRODUCTS = "SELECT * FROM shop_product WHERE shop_id = ?";
+  private static final Function<List<Product>, String> SQL_FETCH_SHOPS_HAVING_ANY_OF_THESE_PRODUCTS = (List<Product> products) -> {
+    String joinedProducts = products.stream()
+      .map(Product::getName)
+      .map(s -> "'" + s + "'")
+      .collect(Collectors.joining(", "));
+    return "SELECT * FROM shop_product WHERE product_name in (" + joinedProducts + " ) ";
+  };
   private static final String SQL_SHOP_HAVING_CHEAPEST_PRODUCT = 
     "SELECT shop_id FROM shop_product WHERE price = (" +
     "  SELECT min(price) FROM shop_product WHERE product_name = ?" +
@@ -242,5 +252,41 @@ public class ShopDaoImpl implements ShopDao {
   @Override
   public void close() throws Exception {
 
+  }
+
+  @Override
+  public List<Pair<Integer, Product>> shopsHavingAnyOfTheseProducts(
+      List<Product> products) {
+
+    ArrayList<Pair<Integer, Product>> pairs = new ArrayList<>();
+    //@formatter:off
+    try (
+      Connection connection = DataSource.getConnection();
+      PreparedStatement ps = connection.prepareStatement(
+        SQL_FETCH_SHOPS_HAVING_ANY_OF_THESE_PRODUCTS.apply(products)
+      );
+    ) {
+    //@formatter:on
+      ResultSet rs = ps.executeQuery();
+      while (rs.next()) {
+        Product product = new Product();
+        product.setName(rs.getString("product_name"));
+        product.setPrice(rs.getInt("price"));
+        product.setQuantity(rs.getInt("quantity"));
+        //@formatter:off
+        pairs.add(
+          Pair.with(
+            rs.getInt("shop_id"),
+            product
+          )
+        );
+        //@formatter:on
+      }
+    } catch (SQLException e) {
+      logger.severe(e.getMessage());
+      // e.printStackTrace();
+    }
+
+    return pairs;
   }
 }

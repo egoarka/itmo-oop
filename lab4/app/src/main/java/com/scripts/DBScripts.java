@@ -38,8 +38,13 @@ public class DBScripts {
     exec(scriptPath);
   }
 
-  public static void fillDB() {
-    String scriptPath = dbScriptsDir.resolve("fill-db.sql").toString();
+  public static void fillDBDao() {
+    String scriptPath = dbScriptsDir.resolve("fill-db-dao.sql").toString();
+    exec(scriptPath);
+  }
+
+  public static void fillDBServices() {
+    String scriptPath = dbScriptsDir.resolve("fill-db-services.sql").toString();
     exec(scriptPath);
   }
 

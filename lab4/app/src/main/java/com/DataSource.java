@@ -21,6 +21,8 @@ public class DataSource {
     );
     //@formatter:on
     ds = new HikariDataSource();
+    ds.setMaximumPoolSize(100);
+    ds.setConnectionTimeout(50000);
     ds.setJdbcUrl(url);
     ds.setUsername(env.get("DB_USERNAME"));
     ds.setPassword(env.get("DB_PASSWORD"));

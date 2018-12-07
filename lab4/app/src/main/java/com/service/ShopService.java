@@ -14,6 +14,7 @@ public interface ShopService {
   List<Product> deliverToShop(Shop shop, List<Product> products,
       Boolean newPrice);
 
+  // and there's we can buy not only one, but many products
   Optional<Integer> buyProduct(Shop shop, Product product);
 
   Optional<Shop> whereToBuyAtProfit(List<Product> products);
