@@ -21,11 +21,6 @@ import org.javatuples.Pair;
 import org.junit.Before;
 import org.junit.Test;
 
-// import com.github.BenoitDuffez;
-
-/**
- * Unit test for simple App.
- */
 public class DaoTest {
   private ShopDao shopDao = new ShopDaoImpl();
   private ProductDao productDao = new ProductDaoImpl();
