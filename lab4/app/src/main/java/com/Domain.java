@@ -29,6 +29,7 @@ public class Domain {
     // ProductDaoImpl d = new ProductDaoImpl();
     // Optional<String> name = d.insert(new Product("vilk"));
     // name.ifPresent(System.out::println);
+
     if (true)
       return;
     // System.out.println(String.format("hellao%nworld", ""));

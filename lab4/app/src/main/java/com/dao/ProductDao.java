@@ -10,16 +10,4 @@ public interface ProductDao {
   public Optional<String> insert(Product product);
 
   public Optional<Product> findByName(String name);
-
-  /*
-   * public List<Product> findAll();
-   * 
-   * public Product findById(Long id);
-   * 
-   * public void insert(Product item);
-   * 
-   * public void update(Product item);
-   * 
-   * public void delete(Product item);
-   */
 }

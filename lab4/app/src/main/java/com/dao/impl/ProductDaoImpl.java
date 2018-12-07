@@ -14,7 +14,6 @@ import com.entity.Product;
 
 public class ProductDaoImpl implements ProductDao {
   private static final String SQL_INSERT = "INSERT INTO products (name) VALUES (?)";
-  private static final String SQL_DELETE = "DELETE FROM products WHERE name = ?";
   private static final String SQL_FIND_BY_NAME = "SELECT * FROM products where name = ?";
 
   private static Logger logger = MyLogger

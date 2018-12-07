@@ -17,21 +17,23 @@ INSERT INTO products (name)
 -- INSERT INTO products (name) 
 --   VALUES ('ice-cream');
 
--- Найти магазин, в котором определенный товар самый дешевый
-INSERT INTO shop_product (shop_id, product_name) 
-  VALUES (1, 'milk');
-UPDATE shop_product
-  SET price = 15, quantity = 3
-WHERE shop_id = 1 AND product_name = 'milk';
+INSERT INTO shop_product (shop_id, product_name, quantity, price) 
+  VALUES (1, 'milk', 3, 15);
 
-INSERT INTO shop_product (shop_id, product_name) 
-  VALUES (2, 'milk');
-UPDATE shop_product
-  SET price = 35, quantity = 7
-WHERE shop_id = 2 AND product_name = 'milk';
+INSERT INTO shop_product (shop_id, product_name, quantity, price) 
+  VALUES (2, 'milk', 7, 35);
 
-INSERT INTO shop_product (shop_id, product_name) 
-  VALUES (2, 'salt');
-UPDATE shop_product
-  SET price = 2, quantity = 1
-WHERE shop_id = 2 AND product_name = 'salt';
+INSERT INTO shop_product (shop_id, product_name, quantity, price) 
+  VALUES (2, 'salt', 1, 2);
+
+-- UPDATE shop_product
+--   SET price = 15, quantity = 3
+-- WHERE shop_id = 1 AND product_name = 'milk';
+
+-- UPDATE shop_product
+--   SET price = 35, quantity = 7
+-- WHERE shop_id = 2 AND product_name = 'milk';
+
+-- UPDATE shop_product
+--   SET price = 2, quantity = 1
+-- WHERE shop_id = 2 AND product_name = 'salt';

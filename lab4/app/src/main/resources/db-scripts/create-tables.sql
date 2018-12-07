@@ -19,7 +19,7 @@ CREATE TABLE shops
 (
   id int IDENTITY(1,1),
   name nvarchar(50) NOT NULL,
-  address nvarchar(100) NOT NULL
+  address nvarchar(100) NOT NULL,
 
   CONSTRAINT pk_shops
     PRIMARY KEY (id),
@@ -29,9 +29,9 @@ CREATE TABLE shops
 CREATE TABLE shop_product
 (
   shop_id int,
-  product_name nvarchar(50),
-  price int,
-  quantity int
+  product_name nvarchar(50) NOT NULL,
+  price int NOT NULL,
+  quantity int NOT NULL,
 
   CONSTRAINT fk_sp_pd_shop_id
     FOREIGN KEY (shop_id)

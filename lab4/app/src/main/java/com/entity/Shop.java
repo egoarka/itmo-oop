@@ -3,9 +3,22 @@ package com.entity;
 import java.util.Objects;
 
 public class Shop {
+  public static final String TABLE_NAME = "shops";
+  public static final String ID_COLUMN = "id";
+  public static final String NAME_COLUMN = "name";
+  public static final String ADDRESS_COLUMN = "address";
+
   private Long id;
   private String name;
   private String address;
+
+  public Shop(String name, String address) {
+    this.name = name;
+    this.address = address;
+  }
+
+  public Shop() {
+  }
 
   public Long getId() {
     return this.id;
