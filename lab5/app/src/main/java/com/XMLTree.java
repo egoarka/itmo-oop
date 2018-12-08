@@ -30,29 +30,45 @@ public class XMLTree {
     );
   }
 
-  public static String toString(Element xmlTreeRoot) {
-    org.dom4j.Document document = DocumentHelper.createDocument();
-    org.dom4j.Element root = document.addElement(xmlTreeRoot.getTag());
-    
+  public static org.dom4j.Element toDom(Element xmlTreeRoot, org.dom4j.Element root) {
     Either<String, List<Element>> children = xmlTreeRoot.getChildren();
     children
       .fold(
-        left -> left,
+        left -> {
+          root.setText(left);
+          return null;
+        },
         right -> {
           right.stream()
-            .map(element -> {
-              org.dom4j.Element e = DocumentHelper.createElement(element.getTag());
-              e.setText(element.getChildren().getLeft());
-              return e;
-            })
             .forEach(element -> {
-              root.add(element);
+              Either<String, List<Element>> child = element.getChildren();
+              org.dom4j.Element domElement = DocumentHelper.createElement(element.getTag());
+              if (child.getClass() == Either.Left.class) {
+                domElement.setText(child.getLeft());
+              } else {
+                child.getRight()
+                  .stream()
+                  .forEach((nestedElement) -> {
+                    domElement.add(toDom(nestedElement));
+                  });
+              }
+              root.add(domElement);
             });
           return null;
         }
       );
+    return root;
+  }
 
-    return document.asXML();
+  public static org.dom4j.Element toDom(Element xmlTreeRoot) {
+    org.dom4j.Document document = DocumentHelper.createDocument();
+    org.dom4j.Element root = document.addElement(xmlTreeRoot.getTag());
+    return toDom(xmlTreeRoot, root);
+  }
+
+  public static String toString(Element xmlTreeRoot) {
+    org.dom4j.Element root = toDom(xmlTreeRoot);
+    return root.asXML();
   }
 
   public static String getXmlTagName(Object instance, Either<Field, Method> from) throws Exception {
@@ -78,12 +94,15 @@ public class XMLTree {
   }
 
   public static Either<String, List<Element>> process(Object instance) {
+    if (instance.getClass() == (Integer.class) || instance.getClass() == (String.class)) {
+      return Either.left(instance.toString());
+    }
+
     List<Method> methods = methodCache.computeIfAbsent(instance.getClass(),
         (clazz) -> Arrays.asList(clazz.getDeclaredMethods()));
     List<Field> fields = fieldCache.computeIfAbsent(instance.getClass(),
         (clazz) -> Arrays.asList(clazz.getDeclaredFields()));
 
-    // TODO: if children is not string
     List<Element> fieldElements = fields
       .stream()
       .filter(field -> {
@@ -92,16 +111,17 @@ public class XMLTree {
       })
       .map(field -> {
         String tag = "";
-        String children = "";
+        Either<String, List<Element>> children = null;
         field.setAccessible(true);
         try {
           tag = getXmlTagName(instance, Either.left(field));
-          children = field.get(instance).toString();
+          Object fieldInstance = field.get(instance);
+          children = process(fieldInstance);
         } catch (Exception e) {
           e.printStackTrace();
         }
-        
-        return Element.createElement(tag, new HashMap<>(), Either.left(children));
+
+        return Element.createElement(tag, new HashMap<>(), children);
       })
       .collect(Collectors.toList());
 
@@ -118,6 +138,7 @@ public class XMLTree {
         String children = "";
         try {
           tag = getXmlTagName(instance, Either.right(method));
+          // TODO: if returned is class
           children = method.invoke(instance).toString();
         } catch (Exception e) {
           e.printStackTrace();

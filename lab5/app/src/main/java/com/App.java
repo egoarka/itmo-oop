@@ -9,6 +9,7 @@ public class App {
     Person p = new Person();
     Element xmlTreeRoot = XMLTree.computeTree(p);
     String s = XMLTree.toString(xmlTreeRoot);
+    System.out.println("we have");
     System.out.println(s);
   }
 }
