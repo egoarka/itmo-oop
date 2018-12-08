@@ -5,7 +5,7 @@ import com.attributes.XmlTag;
 
 @XmlObject
 class Wtf {
-  @XmlTag
+  @XmlTag(name = "wtf-field")
   private final int suv = 3333333;
 }
 
@@ -19,7 +19,7 @@ public class Person {
   // private final String lang;
   @XmlTag()
   private final int foo = 30;
-  @XmlTag
+  @XmlTag(name = "wtf")
   private final Wtf rb = new Wtf();
 
   // public Person(String name, String lang, int age) {

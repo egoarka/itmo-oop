@@ -83,7 +83,7 @@ public class XMLTree {
         )
       );
     String namedTag = "";
-    if(folded.getValue1() instanceof XmlTag){ 
+    if (folded.getValue1() instanceof XmlTag) { 
       XmlTag xmlTag = (XmlTag)(folded.getValue1());
       namedTag = xmlTag.name();
     }
@@ -93,8 +93,12 @@ public class XMLTree {
       .orElseGet(() -> folded.getValue0());
   }
 
+  private static Boolean isPrimitive(Class<?> clazz) {
+    return clazz == (Integer.class) || clazz == (String.class);
+  }
+
   public static Either<String, List<Element>> process(Object instance) {
-    if (instance.getClass() == (Integer.class) || instance.getClass() == (String.class)) {
+    if (isPrimitive(instance.getClass())) {
       return Either.left(instance.toString());
     }
 

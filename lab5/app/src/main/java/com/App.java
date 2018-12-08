@@ -3,13 +3,7 @@ package com;
 // Files.write(Paths.get("./output.xml"), s.getBytes());
 public class App {
 
-  public static void main(String[] args)
-      throws NoSuchFieldException, SecurityException {
+  public static void main(String[] args) {
   //@formatter:off
-    Person p = new Person();
-    Element xmlTreeRoot = XMLTree.computeTree(p);
-    String s = XMLTree.toString(xmlTreeRoot);
-    System.out.println("we have");
-    System.out.println(s);
   }
 }
